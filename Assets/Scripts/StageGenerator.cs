@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// ステージを作成するクラス
 /// </summary>
-public class StageGenerator : MonoBehaviour,IStageCreater
+public class StageGenerator : MonoBehaviour, IStageGenerator
 {
     // ステージが作成済みか
     public bool IsCreated { get; set; } = false;
@@ -17,22 +17,17 @@ public class StageGenerator : MonoBehaviour,IStageCreater
 
     private void OnEnable()
     {
-        if (!ServiceLocator<IStageCreater>.IsValid)
+        if (!ServiceLocator<IStageGenerator>.IsValid)
         {
-            ServiceLocator<IStageCreater>.Regist(this);
+            ServiceLocator<IStageGenerator>.Regist(this);
         }
     }
 
     private void OnDisable()
     {
-        if (ServiceLocator<IStageCreater>.IsValid)
+        if (ServiceLocator<IStageGenerator>.IsValid)
         {
-            ServiceLocator<IStageCreater>.UnRegist(this);
+            ServiceLocator<IStageGenerator>.UnRegist(this);
         }
-    }
-
-    public bool CreateStageRequest(Tile tile)
-    {
-        throw new System.NotImplementedException();
     }
 }

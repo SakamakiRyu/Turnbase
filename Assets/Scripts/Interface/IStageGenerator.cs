@@ -1,0 +1,4 @@
+﻿internal interface IStageGenerator
+{
+    
+}
