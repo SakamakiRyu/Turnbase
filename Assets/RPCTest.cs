@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
 public class RPCTest : MonoBehaviour
 {
     private PhotonView _photonView;
-
-    [SerializeField]
-    private TestObject _go;
 
     private void Awake()
     {
@@ -18,19 +16,27 @@ public class RPCTest : MonoBehaviour
     // RPCÇåƒÇ‘
     public void OnClick()
     {
-        _photonView.RPC("Test", RpcTarget.All, _go);
+        var t = new TestPlayer
+        {
+            Name = "AAA",
+            ID = 123
+        };
+        var json = JsonUtility.ToJson(t);
+        _photonView.RPC(nameof(Test), RpcTarget.Others, json);
     }
 
     // åƒÇŒÇÍÇÈèàóù
     [PunRPC]
-    public void Test(TestObject go)
+    public void Test(string json)
     {
-        if (go == _go)
-        {
-            Debug.Log("True" + go._num);
-            return;
-        }
-
-        Debug.Log("False");
+        var date = JsonUtility.FromJson<TestPlayer>(json);
+        Debug.Log(date.Name + " : " + date.ID.ToString());
     }
+}
+
+[System.Serializable]
+public class TestPlayer
+{
+    public string Name;
+    public int ID;
 }

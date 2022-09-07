@@ -10,11 +10,6 @@ public class StageGenerator : MonoBehaviour, IStageGenerator
     // ステージが作成済みか
     public bool IsCreated { get; set; } = false;
 
-    private void Awake()
-    {
-
-    }
-
     private void OnEnable()
     {
         if (!ServiceLocator<IStageGenerator>.IsValid)

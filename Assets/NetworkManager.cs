@@ -59,6 +59,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 他のプレイヤーが自分の居るRoomに参加した時に呼ばれる
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("Other player join to youre room");
         CloseRoom();
     }
 
@@ -103,13 +104,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected)
         {
-            RoomOptions roomOptions = new RoomOptions();
-            // 誰でも参加可能か
-            roomOptions.IsVisible = true;
-            // 最大人数
-            roomOptions.MaxPlayers = 2;
+            RoomOptions roomOptions = new()
+            {
+                // 誰でも参加可能か
+                IsVisible = true,
+                // 最大人数
+                MaxPlayers = 2
+            };
             // ルームの作成
-            var photon = PhotonNetwork.CreateRoom("Default", roomOptions);
+            PhotonNetwork.CreateRoom("Default", roomOptions);
         }
     }
 }
