@@ -9,6 +9,13 @@ public class EventTest : MonoBehaviour
     // PRC‚ðŽg‚¤ˆ×
     private PhotonView _photonView;
 
+    [System.Serializable]
+    private struct SendDatePack
+    {
+        public int ID;
+        public string Name;
+    }
+
     private void Awake()
     {
         _photonView = GetComponent<PhotonView>();
@@ -16,7 +23,13 @@ public class EventTest : MonoBehaviour
 
     public void OnPointerClick(Image image)
     {
-        _photonView.RPC(nameof(SendDate), RpcTarget.Others, image.name);
+        var date = new SendDatePack
+        {
+            ID = 9,
+            Name = image.name
+        };
+        var sendDate = JsonUtility.ToJson(date);
+        _photonView.RPC(nameof(SendDate), RpcTarget.Others, sendDate);
     }
 
     public void OnPointerEnter(Image image)
@@ -30,8 +43,9 @@ public class EventTest : MonoBehaviour
     }
 
     [PunRPC]
-    public void SendDate(string name)
+    public void SendDate(string sendDate)
     {
-        Debug.Log(name);
+        var date = JsonUtility.FromJson<SendDatePack>(sendDate);
+        Debug.Log(date.Name + " " + date.ID);
     }
 }

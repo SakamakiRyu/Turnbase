@@ -842,7 +842,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0297eb7bb804094c958083f5a65a859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnManager: {fileID: 680841987}
 --- !u!114 &680841987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,7 +1461,7 @@ GameObject:
   - component: {fileID: 1331219290}
   - component: {fileID: 1331219289}
   m_Layer: 0
-  m_Name: Test
+  m_Name: PRC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
