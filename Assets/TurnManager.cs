@@ -4,13 +4,30 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 
+[RequireComponent(typeof(PunTurnManager))]
 public class TurnManager : MonoBehaviourPunCallbacks, IPunTurnManagerCallbacks
 {
-    [SerializeField]
     private PunTurnManager _turnManager;
+
+    private void Awake()
+    {
+        TryGetComponent(out _turnManager);
+        // nullだったら追加する
+        if (!_turnManager)
+        {
+            _turnManager = gameObject.AddComponent<PunTurnManager>();
+        }
+    }
 
     private void Start()
     {
+        StartGame();
+    }
+
+    // ゲームをスタートする
+    private void StartGame()
+    {
+        // マスタークライアントがゲームをスタートする
         if (PhotonNetwork.IsMasterClient)
         {
             _turnManager.BeginTurn();
