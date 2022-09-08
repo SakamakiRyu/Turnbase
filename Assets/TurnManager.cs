@@ -1,9 +1,22 @@
+using UnityEngine;
+
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 
 public class TurnManager : MonoBehaviourPunCallbacks, IPunTurnManagerCallbacks
 {
+    [SerializeField]
+    private PunTurnManager _turnManager;
+
+    private void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _turnManager.BeginTurn();
+        }
+    }
+
     // 各プレイヤーの行動が終わった時に呼ばれる
     public void OnPlayerFinished(Player player, int turn, object move)
     {

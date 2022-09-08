@@ -39,7 +39,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // 接続に失敗した時に呼ばれる
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.Log("接続失敗");
+        Debug.Log("切断しました");
     }
 
     // マスターサーバーに接続された時に呼ばれる
@@ -47,19 +47,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         // ロビーに参加
         PhotonNetwork.JoinLobby();
-        Debug.Log("接続成功");
     }
 
     // Roomに参加したときに呼ばれる処理(自分)
     public override void OnJoinedRoom()
     {
-        Debug.Log("入室完了");
     }
 
     // 他のプレイヤーが自分の居るRoomに参加した時に呼ばれる
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("Other player join to youre room");
         CloseRoom();
     }
 
