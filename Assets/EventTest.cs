@@ -12,7 +12,6 @@ public class EventTest : MonoBehaviour
     [System.Serializable]
     private struct SendDatePack
     {
-        public int ID;
         public string Name;
     }
 
@@ -25,27 +24,17 @@ public class EventTest : MonoBehaviour
     {
         var date = new SendDatePack
         {
-            ID = 9,
             Name = image.name
         };
         var sendDate = JsonUtility.ToJson(date);
         _photonView.RPC(nameof(SendDate), RpcTarget.Others, sendDate);
     }
 
-    public void OnPointerEnter(Image image)
-    {
-        image.color = Color.blue;
-    }
-
-    public void OnPointerExit(Image image)
-    {
-        image.color = Color.white;
-    }
-
     [PunRPC]
     public void SendDate(string sendDate)
     {
         var date = JsonUtility.FromJson<SendDatePack>(sendDate);
-        Debug.Log(date.Name + " " + date.ID);
+        var sendedData = GameObject.Find(date.Name).GetComponent<Image>();
+        sendedData.color = Color.red;
     }
 }
