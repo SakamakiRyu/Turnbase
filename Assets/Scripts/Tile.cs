@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// タイルクラス
+/// タイルオブジェクト
 /// </summary>
 public class Tile : MonoBehaviour
 {
-    
+
 }
