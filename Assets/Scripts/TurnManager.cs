@@ -7,6 +7,7 @@ using Photon.Realtime;
 [RequireComponent(typeof(PunTurnManager))]
 public class TurnManager : MonoBehaviourPunCallbacks, IPunTurnManagerCallbacks
 {
+    // Photonのターン管理クラス
     private PunTurnManager _turnManager;
 
     private void Awake()

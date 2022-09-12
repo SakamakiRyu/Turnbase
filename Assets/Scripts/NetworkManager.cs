@@ -12,6 +12,8 @@ using Photon.Realtime;
 /// </summary>
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public int ActorNumber { get; private set; }
+
     private void Start()
     {
         Connect("1.0");
@@ -55,7 +57,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     // 他のプレイヤーが自分の居るRoomに参加した時に呼ばれる
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player player)
     {
         CloseRoom();
     }
