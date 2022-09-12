@@ -8,10 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(EventTrigger))]
 public class Tile : MonoBehaviour
 {
-    [SerializeField]
-    private int _id;
-
-    public int ID => _id;
+    public int ID { get; set; }
 
     private Image _image;
 
