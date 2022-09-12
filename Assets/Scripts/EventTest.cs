@@ -12,6 +12,13 @@ public class EventTest : MonoBehaviour
     // タイルリスト
     private Tile[] _tiles;
 
+    [System.Serializable]
+    public struct SendDates
+    {
+        public int ActorNumber;
+        public int ID;
+    }
+
     private void Awake()
     {
         _photonView = GetComponent<PhotonView>();
@@ -25,17 +32,24 @@ public class EventTest : MonoBehaviour
     // タイルがクリックされた時に呼ばれる
     public void OnPointerClick(Tile tile)
     {
-        var id = tile.ID;
-        var actNum = PhotonNetwork.LocalPlayer.ActorNumber;
-        _photonView.RPC(nameof(SendDate), RpcTarget.All,actNum, id);
+        var sendPack = new
+        {
+            ActorNumber = PhotonNetwork.LocalPlayer.ActorNumber,
+            ID = tile.ID
+        };
+        var json = JsonUtility.ToJson(sendPack);
+        _photonView.RPC(nameof(SendDate), RpcTarget.All, json);
     }
 
     [PunRPC]
-    public void SendDate(int actorNumber,int ID)
+    public void SendDate(string json)
     {
-        var targetTile = _tiles.Where(x => x.ID == ID).First(x => x.GetComponent<Tile>());
+        // jsonから元のデータに戻す
+        var date = JsonUtility.FromJson<SendDates>(json);
+        // 送られてきたタイルを参照する
+        var targetTile = _tiles.Where(x => x.ID == date.ID).First(x => x.GetComponent<Tile>());
 
-        if (actorNumber == 1)
+        if (date.ActorNumber == 1)
         {
             targetTile.SetColor(Color.red);
         }
